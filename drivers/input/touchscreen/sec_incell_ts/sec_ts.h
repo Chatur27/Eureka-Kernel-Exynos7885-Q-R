@@ -38,6 +38,7 @@
 #include <linux/vmalloc.h>
 #include <linux/wakelock.h>
 #include <linux/workqueue.h>
+#include <linux/pm_qos.h>
 
 #ifdef CONFIG_FB
 #include <linux/notifier.h>
@@ -738,6 +739,8 @@ struct sec_ts_data {
 	int (*sec_ts_i2c_write_burst)(struct sec_ts_data *ts, u8 *data, int len);
 	int (*sec_ts_i2c_read_bulk)(struct sec_ts_data *ts, u8 *data, int len);
 	int (*sec_ts_read_sponge)(struct sec_ts_data *ts, u8 *data, int len);
+
+	struct pm_qos_request pm_qos_req;
 };
 
 struct sec_ts_plat_data {
