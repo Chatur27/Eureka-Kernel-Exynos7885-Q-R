@@ -5,6 +5,7 @@ obj-$(CONFIG_EXYNOS_DECON_LCD_S6E3FA7)	+= s6e3fa7_mipi_lcd.o s6e3fa7_lcd_ctrl.o
 obj-y += ../decon_board.o ../decon_notify.o ../decon_abd.o dsim_panel.o
 obj-$(CONFIG_DISPLAY_USE_INFO) += dpui.o
 obj-$(CONFIG_EXYNOS_DECON_MDNIE) += mdnie_lite.o
+obj-$(CONFIG_EXYNOS_DECON_MDNIE_CONTROL) += mdnie_control.o
 obj-$(CONFIG_SUPPORT_POC_FLASH) += poc.o
 
 obj-$(and $(CONFIG_EXYNOS_DECON_MDNIE),$(CONFIG_SEC_GPIO_DVS),$(subst undefined,y,$(origin CONFIG_SAMSUNG_PRODUCT_SHIP))) += dd_mdnie.o
