@@ -2092,7 +2092,7 @@ static ssize_t show_kernel_sysfs_gpu_model(struct kobject *kobj, struct kobj_att
 		{ .id = GPU_ID_PI_T86X, .name = "Mali-T86x" },
 		{ .id = GPU_ID_PI_TFRX, .name = "Mali-T88x" },
 		{ .id = GPU_ID2_PRODUCT_TMIX >> GPU_ID_VERSION_PRODUCT_ID_SHIFT,
-		  .name = "Mali-G71" },
+		  .name = "Mali-G72" },
 		{ .id = GPU_ID2_PRODUCT_THEX >> GPU_ID_VERSION_PRODUCT_ID_SHIFT,
 		  .name = "Mali-THEx" },
 	};
