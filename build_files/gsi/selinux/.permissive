@@ -1,0 +1,3 @@
+# This file is used by build script to know whether this folder is for enforcing or permissive selinux
+
+# This is a permissive selinux folder

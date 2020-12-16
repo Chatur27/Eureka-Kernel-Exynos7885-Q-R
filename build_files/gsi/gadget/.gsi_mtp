@@ -1,0 +1,5 @@
+# This file is used by build script to know whether this folder is for gsi or oneui so as to choose correct 
+# usb driver.
+
+
+# This is a GSI MTP folder

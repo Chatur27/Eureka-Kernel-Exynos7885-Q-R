@@ -1,0 +1,138 @@
+Kernel latest version: Eureka_R5.0_Axxx_P/Q/R
+Author: Chatur
+Contact info:
+ * Telegram: chatur2709
+ * XDA: Chatur27
+ 
+################## Author's useless notice
+I'm not responsible for anything which happens to your device although this kernel has been tested before
+being released officially. Kernel update will be released mostly every month now except if a major bug has to
+be fixed.
+
+
+##################  GLITCH OBSERVED WITH KERNEL
+
+When phone is just booted, little cores cannot be overclocked above 1482 MHz when changed in a kernel manager.
+Change governor for litte cluster to "userspace" and then change both max and min freq
+to 1690 MHz.
+
+##################  MAIN FEATURES OF R4.4.3
+
+1) Disabled Samsung security features (E.g: defex, dm verity, rooting restrictions, knox ncm…)
+
+2) Disabled CRC check on data blocks which improves performance and also enabled toggleable CRC check feature.
+
+3) Removed dirty status from scripts for github.
+
+4) Enabled all governors except Schedutils governor.
+
+5) Overclocked CPU as follows:
+	BIG Cores: from 1560 MHz to 2080 MHz.
+	LIL Cores: from 1352 MHz to 1690 MHz.
+
+6) Removed a bunch of debugging and logging codes
+
+7) Added GPU thermal and voltage control (Can be controlled in HkTweaks) 
+
+8) Added latest boeffla_wl_blocker V 1.1.0 and disabled some wakelocks.
+
+9) Some optimisations for overall performance in kernel
+
+10) Balance battery and performance by reducing CPU wake-ups
+
+11) Added NEON accelerated XOR implementation which improves performance by about 20%
+
+12) Use neon-vfpv4 and softfp
+
+13) Enabled support for NTFS filesystems.
+
+14) Use TCP Congestion algorithm instead of BIC (network speed improvement)
+
+15) Added battery control 
+
+16) Optimized cpufreq and interactive governor.
+
+17) Use -O3 optimization for inputs and crypto.
+
+18) Optimised kernel for performance instead of size
+
+19) GPU max frequency overclocked from 676 MHz to 1300 MHz
+
+20) Underclocked CPU as follows:
+	BIG Cores: from 936 MHz to 520 MHz.
+	LIL Cores: from 839 MHz to 449 MHz.
+
+21) Mark some IRQS and Kthreads as performance critical
+
+22) Patch SafetyNet to bypass detection
+
+23) Enable zram support and set default compressor as lz4.
+
+24) Reduced transition latency for cpu frequencies.
+
+25) Removed verity flag from dt.
+
+26) Allow undervolting of gpu by 100 mV
+
+27) Switch to a lower charging voltage more quickly. This results in a slight reduce in battery capacity
+(about 3% less usable capacity) but this helps to extend the cycle life of the battery.
+
+28) Fixed CPU throttling of both clusters. All cores will get throttled only if temperature is above 95'C
+
+29) Adjusted default gpu highspeed clock to 1001 MHz for a smoother ui experience.
+
+30) Enable deadline I/O scheduler (by developper Gabriel)
+
+31) Upstream LZ4 compressor module and other related optimisations.
+
+32) Implemented Dynamic FSync 2.0 (Disables Fsync when screen is on so as to improve performance)
+
+33) Reduced touchscreen touch latency (To solve a bug on I2C).
+
+34) Upstreamed kernel version from 4.4.177 to 4.4.238 which is the latest stable version.
+Upstreaming allows kernel to have latest security updates, bug fixes, various code improvements
+and so on released by linux developpers.
+
+35) Built with Linaro V6.5.0 toolchain. Reason: Better performance
+
+36) Other performance tweaks (developper Gabriel helped)
+
+
+##################  MAIN FEATURES OF R5.0
+
+37) Attempt to fix drivedroid support
+
+38) Some tweaks for storage performance (better for swap)
+
+39) Fake gpu model to Mali-G72 (Doesn't work probably because gpu model is provided by Vendor partition)
+
+40) Tune CFQ I/O scheduler based on Pixel 4 (by developper Gabriel)
+
+41) Improve code for safetynet bypass in case Google checks for other stuffs in the future.
+
+42) Add ntfs3 driver by paragon software and switch to it. (Still requires app like ntfs mounter by paragon to
+read ntfs filesystems because android os doesnt have necessary libraries to mount ntfs on its own)
+
+43) Upstreamed kernel version from 4.4.238 to 4.4.241 which is the latest stable version.
+
+44) Add a bunch of famous governors (bioshock, blu_active, smartmax, intelliactive, lionheart, and more)
+
+45 Tweak gpu dvfs files' permissions for better performance as suggested
+
+46) Added support for wireguard- A next generation vpn.
+
+47) Enabled schedutil govenor.
+
+48) Other minor performance tweaks
+
+49) FOR ONEUI VERSION ONLY (arm64 vendor for A10 causes bootloop, so gsi version wont have these 2 features:
+         * Use userspace lmkd instead of in-kernel lmk (better ram management)
+         * Disable GFS for better ui responsiveness
+
+50) Remove magisk v21 from kernel so that users can flash any magisk version they want)
+
+51) Update Spectrum profile parameters
+
+52) ...
+
+

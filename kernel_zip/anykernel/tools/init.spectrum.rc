@@ -1,0 +1,102 @@
+# SPECTRUM KERNEL MANAGER
+# Ramdisk file for profile based kernel management
+# Implementation inspired by Franco's fku profiles
+
+
+# Edit for Eureka kernel for A10 R6.0 by Chatur27 on XDA
+#
+## Initialization
+#
+on property:sys.boot_completed=1
+    # Set default profile on first boot
+    exec u:r:init:s0 root root -- /init.spectrum.sh
+    exec u:r:su:s0 root root -- /init.spectrum.sh
+
+# Enable Spectrum support
+setprop spectrum.support 1
+
+
+#
+## Profiles
+#
+
+# Balance (default profile)
+on property:persist.spectrum.profile=0
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 546000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1482000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 520000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 1768000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor interactive
+# write /sys/power/throttle_limit 0:0
+    write /sys/devices/platform/11500000.mali/highspeed_clock 1001000
+    write /sys/devices/platform/11500000.mali/highspeed_load 95
+# write /sys/devices/platform/11500000.mali/power_policy coarse_demand
+    write /sys/kernel/gpu/gpu_governor interactive
+    write /sys/kernel/gpu/gpu_max_clock 1001000
+    write /sys/kernel/gpu/gpu_min_clock 343000
+    write /sys/kernel/hmp/up_threshold 524
+    write /sys/kernel/hmp/down_threshold 214
+    write /sys/module/workqueue/parameters/power_efficient Y
+
+# Performance
+on property:persist.spectrum.profile=1
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 1144000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1690000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 1560000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 2080000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor intelliactive
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor intelliactive
+# write /sys/power/throttle_limit 2080000:1690000
+    write /sys/devices/platform/11500000.mali/highspeed_clock 1001000
+    write /sys/devices/platform/11500000.mali/highspeed_load 75
+# write /sys/devices/platform/11500000.mali/power_policy coarse_demand
+    write /sys/kernel/gpu/gpu_governor interactive
+    write /sys/kernel/gpu/gpu_max_clock 1100000
+    write /sys/kernel/gpu/gpu_min_clock 343000
+    write /sys/kernel/hmp/up_threshold 524
+    write /sys/kernel/hmp/down_threshold 214
+    write /sys/module/workqueue/parameters/power_efficient N
+
+# Battery
+on property:persist.spectrum.profile=2
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 449000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1352000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 512000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 1560000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor smartmax
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor smartmax
+# write /sys/power/throttle_limit 0:0
+    write /sys/devices/platform/11500000.mali/highspeed_clock 450000
+    write /sys/devices/platform/11500000.mali/highspeed_load 97
+# write /sys/devices/platform/11500000.mali/power_policy coarse_demand
+    write /sys/kernel/gpu/gpu_governor interactive
+    write /sys/kernel/gpu/gpu_max_clock 676000
+    write /sys/kernel/gpu/gpu_min_clock 343000
+    write /sys/kernel/hmp/up_threshold 700
+    write /sys/kernel/hmp/down_threshold 256
+    write /sys/module/workqueue/parameters/power_efficient Y
+
+# Gaming
+on property:persist.spectrum.profile=3
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 1352000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1690000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_min_freq 1352000
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq 2080000
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor blu_active
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor blu_active
+# write /sys/power/throttle_limit 1664000:1352000
+    write /sys/devices/platform/11500000.mali/highspeed_clock 1300000
+    write /sys/devices/platform/11500000.mali/highspeed_load 88
+# write /sys/devices/platform/11500000.mali/power_policy always_on
+    write /sys/kernel/gpu/gpu_governor interactive
+    write /sys/kernel/gpu/gpu_max_clock 1300000
+    write /sys/kernel/gpu/gpu_min_clock 845000
+    write /sys/kernel/hmp/up_threshold 430
+    write /sys/kernel/hmp/down_threshold 150
+    write /sys/module/workqueue/parameters/power_efficient N
+

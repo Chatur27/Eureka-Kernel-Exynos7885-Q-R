@@ -1,0 +1,315 @@
+
+# Eureka for OneUI
+
+######################################### FULL INSTALLATION MENU STUFFS ##########################################
+    if file_getprop("/tmp/aroma/kernel.prop", "selected.1") == "1" then
+
+	ui_print("*********************************************************");
+	ui_print("Installing Eureka Kernel for ONEUI with full features ");
+	ui_print("*********************************************************");
+	ui_print("Features: Enforcing SElinux, OC & UC, Spectrum &");
+	ui_print("\t Magisk 21.0");
+	ui_print("*********************************************************");
+	ui_print("\t\t            By Chatur & Gabriel             ");
+	ui_print("*********************************************************");
+	ui_print("\t\t              For Galaxy A10                ");
+	ui_print("*********************************************************");
+	ui_print(" ");
+	ui_print(" ");
+	set_progress(0.1);
+
+	########### Install Eureka kernel base for ONEUI ############
+	ui_print("*********************************************************");
+	ui_print("-- Installing Eureka base for OneUI");
+	ui_print("*********************************************************");
+	package_extract_dir("kernel", "/tmp/kernel");
+	run_program("/sbin/busybox", "sh", "/tmp/kernel/update-binary", "dummy", "1", "/tmp/kernel/oneui.zip");
+	delete_recursive("/tmp/kernel");
+	set_progress(0.3);
+
+	########### Install Eureka main dtbo ############
+	package_extract_file("dtbo/main/dtbo.img", "/dev/block/platform/13500000.dwmmc0/by-name/dtbo");
+	set_progress(0.5);
+
+	########### Install Spectrum support ############
+	ui_print("*********************************************************");
+	ui_print("-- Installing/updating spectrum support");
+	ui_print("*********************************************************");
+	package_extract_dir("spectrum", "/tmp/spectrum");
+	run_program("/sbin/busybox", "sh", "/tmp/spectrum/update-binary", "dummy", "1", "/tmp/spectrum/spectrum_eureka.zip");
+	delete_recursive("/tmp/spectrum");
+	set_progress(0.7);
+
+	########### Install Magisk root ############
+	ui_print("*********************************************************");
+	ui_print("-- Installing/updating Magisk v21.0");
+	ui_print("*********************************************************");
+	package_extract_dir("magisk", "/tmp/magisk");
+	run_program("/sbin/busybox", "sh", "/tmp/magisk/update-binary", "dummy", "1", "/tmp/magisk/v21.0.zip");
+	delete_recursive("/tmp/magisk");
+	set_progress(0.9);
+
+endif;
+
+
+
+# Eureka for GSI Permissive
+if file_getprop("/tmp/aroma/kernel.prop", "selected.1") == "2" then
+
+ui_print("*********************************************************");
+ui_print("Installing Eureka Kernel for GSI with full features ");
+ui_print("*********************************************************");
+ui_print("Features: Permissive SElinux, OC & UC, Spectrum & Magisk 21");
+ui_print("*********************************************************");
+ui_print("\t\t            By Chatur & Gabriel             ");
+ui_print("*********************************************************");
+ui_print("\t\t              For Galaxy A10                ");
+ui_print("*********************************************************");
+ui_print(" ");
+ui_print(" ");
+set_progress(0.1);
+
+########### Install Eureka kernel base for GSI ############
+ui_print("*********************************************************");
+ui_print("-- Installing Eureka base for GSI with Permissive SElinux");
+ui_print("*********************************************************");
+package_extract_dir("kernel", "/tmp/kernel");
+run_program("/sbin/busybox", "sh", "/tmp/kernel/update-binary", "dummy", "1", "/tmp/kernel/gsi_perm.zip");
+delete_recursive("/tmp/kernel");
+set_progress(0.3);
+
+########### Install Eureka main dtbo ############
+package_extract_file("dtbo/main/dtbo.img", "/dev/block/platform/13500000.dwmmc0/by-name/dtbo");
+set_progress(0.5);
+
+########### Install Spectrum support ############
+ui_print("*********************************************************");
+ui_print("-- Installing/updating spectrum support");
+ui_print("*********************************************************");
+package_extract_dir("spectrum", "/tmp/spectrum");
+run_program("/sbin/busybox", "sh", "/tmp/spectrum/update-binary", "dummy", "1", "/tmp/spectrum/spectrum_eureka.zip");
+delete_recursive("/tmp/spectrum");
+set_progress(0.7);
+
+########### Install Magisk root ############
+ui_print("*********************************************************");
+ui_print("-- Installing/updating Magisk v21.0");
+ui_print("*********************************************************");
+package_extract_dir("magisk", "/tmp/magisk");
+run_program("/sbin/busybox", "sh", "/tmp/magisk/update-binary", "dummy", "1", "/tmp/magisk/v21.0.zip");
+delete_recursive("/tmp/magisk");
+set_progress(0.9);
+
+endif;
+
+
+# Eureka for GSI Enforcing
+if file_getprop("/tmp/aroma/kernel.prop", "selected.1") == "3" then
+
+ui_print("*********************************************************");
+ui_print("-- Installing Eureka Kernel for GSI with full features ");
+ui_print("*********************************************************");
+ui_print("-- Features: Enforcing SElinux, OC & UC, Spectrum & Magisk 21");
+ui_print("*********************************************************");
+ui_print("\t\t            By Chatur & Gabriel             ");
+ui_print("*********************************************************");
+ui_print("\t\t              For Galaxy A10                ");
+ui_print("*********************************************************");
+ui_print(" ");
+ui_print(" ");
+set_progress(0.1);
+
+########### Install Eureka kernel base for GSI Enforcing ############
+ui_print("*********************************************************");
+ui_print("-- Installing Eureka base for GSI with Enforcing SElinux");
+ui_print("*********************************************************");
+package_extract_dir("kernel", "/tmp/kernel");
+run_program("/sbin/busybox", "sh", "/tmp/kernel/update-binary", "dummy", "1", "/tmp/kernel/gsi_enf.zip");
+delete_recursive("/tmp/kernel");
+set_progress(0.3);
+
+########### Install Eureka main dtbo ############
+package_extract_file("dtbo/main/dtbo.img", "/dev/block/platform/13500000.dwmmc0/by-name/dtbo");
+set_progress(0.5);
+
+########### Install Spectrum support ############
+ui_print("*********************************************************");
+ui_print("-- Installing/updating spectrum support");
+ui_print("*********************************************************");
+package_extract_dir("spectrum", "/tmp/spectrum");
+run_program("/sbin/busybox", "sh", "/tmp/spectrum/update-binary", "dummy", "1", "/tmp/spectrum/spectrum_eureka.zip");
+delete_recursive("/tmp/spectrum");
+set_progress(0.7);
+
+########### Install Magisk root ############
+ui_print("*********************************************************");
+ui_print("-- Installing/updating Magisk v21.0");
+ui_print("*********************************************************");
+package_extract_dir("magisk", "/tmp/magisk");
+run_program("/sbin/busybox", "sh", "/tmp/magisk/update-binary", "dummy", "1", "/tmp/magisk/v21.0.zip");
+delete_recursive("/tmp/magisk");
+set_progress(0.9);
+
+endif;
+
+###################################### END OF FULL INSTALLATION MENU STUFFS ######################################
+
+
+########################################## CUSTOMIZATION MENU STUFFS #############################################
+run_program("/sbin/busybox", "cp", "-f", "/props/kernel.prop", "/tmp/aroma");
+if file_getprop("/tmp/aroma/customize.prop", "selected.1") == "1" then
+
+ui_print("*********************************************************");
+ui_print("\t Installing Eureka Kernel with custom features ");
+ui_print("*********************************************************");
+ui_print("\t\t            By Chatur & Gabriel             ");
+ui_print("*********************************************************");
+ui_print("\t\t              For Galaxy A10                ");
+ui_print("*********************************************************");
+ui_print(" ");
+ui_print(" ");
+set_progress(0.1);
+
+########### Install Eureka kernel base for ONEUI ############
+ui_print("-- Installing Eureka base for OneUI");
+package_extract_dir("kernel", "/tmp/kernel");
+run_program("/sbin/busybox", "sh", "/tmp/kernel/update-binary", "dummy", "1", "/tmp/kernel/oneui.zip");
+delete_recursive("/tmp/kernel");
+set_progress(0.3);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.1") == "2" then
+
+ui_print("*********************************************************");
+ui_print("\t Installing Eureka Kernel with custom features ");
+ui_print("*********************************************************");
+ui_print("\t\t            By Chatur & Gabriel             ");
+ui_print("*********************************************************");
+ui_print("\t\t              For Galaxy A10                ");
+ui_print("*********************************************************");
+ui_print(" ");
+ui_print(" ");
+set_progress(0.1);
+
+########### Install Eureka kernel base for GSI Permissive ############
+ui_print("-- Installing Eureka base for GSI with Permissive SElinux");
+package_extract_dir("kernel", "/tmp/kernel");
+run_program("/sbin/busybox", "sh", "/tmp/kernel/update-binary", "dummy", "1", "/tmp/kernel/gsi_perm.zip");
+delete_recursive("/tmp/kernel");
+set_progress(0.3);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.1") == "3" then
+
+ui_print("*********************************************************");
+ui_print("\t Installing Eureka Kernel with custom features ");
+ui_print("*********************************************************");
+ui_print("\t\t            By Chatur & Gabriel             ");
+ui_print("*********************************************************");
+ui_print("\t\t              For Galaxy A10                ");
+ui_print("*********************************************************");
+ui_print(" ");
+ui_print(" ");
+set_progress(0.1);
+
+########### Install Eureka kernel base for GSI Enforcing ############
+ui_print("-- Installing Eureka base for GSI with Enforcing SElinux");
+package_extract_dir("kernel", "/tmp/kernel");
+run_program("/sbin/busybox", "sh", "/tmp/kernel/update-binary", "dummy", "1", "/tmp/kernel/gsi_enf.zip");
+delete_recursive("/tmp/kernel");
+set_progress(0.3);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.1") == "4" then
+
+ui_print("*********************************************************");
+ui_print("\t CAUTION: NO KERNEL BASE HAS BEEN SELECTED ");
+ui_print("*********************************************************");
+set_progress(0.1);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.2") == "1" then
+
+########### Install Spectrum support ############
+ui_print("-- Installing/updating spectrum support");
+package_extract_dir("spectrum", "/tmp/spectrum");
+run_program("/sbin/busybox", "sh", "/tmp/spectrum/update-binary", "dummy", "1", "/tmp/spectrum/spectrum_eureka.zip");
+delete_recursive("/tmp/spectrum");
+set_progress(0.5);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.2") == "2" then
+
+########### Remove Spectrum support ############
+ui_print("*********************************************************");
+ui_print("-- Removing Spectrum support if found on your system");
+ui_print("*********************************************************");
+
+set_progress(0.5);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.3") == "1" then
+
+########### Install Magisk root ############
+ui_print("*********************************************************");
+ui_print("-- Installing/updating Magisk v21.0");
+ui_print("*********************************************************");
+package_extract_dir("magisk", "/tmp/magisk");
+run_program("/sbin/busybox", "sh", "/tmp/magisk/update-binary", "dummy", "1", "/tmp/magisk/v21.0.zip");
+delete_recursive("/tmp/magisk");
+set_progress(0.7);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.3") == "2" then
+
+########### Install Magisk root ############
+ui_print("*********************************************************");
+ui_print("-- Installing/updating Magisk v20.4");
+ui_print("*********************************************************");
+package_extract_dir("magisk", "/tmp/magisk");
+run_program("/sbin/busybox", "sh", "/tmp/magisk/update-binary", "dummy", "1", "/tmp/magisk/v20.4.zip");
+delete_recursive("/tmp/magisk");
+set_progress(0.7);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.3") == "3" then
+
+########### Install Magisk root ############
+ui_print("*********************************************************");
+ui_print("-- MAGISK ROOT HAS NOT BEEN INSTALLED");
+ui_print("*********************************************************");
+set_progress(0.7);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.4") == "1" then
+
+########### Install Eureka main dtbo ############
+ui_print("*********************************************************");
+ui_print("-- Enabling Overclock and Underclock");
+ui_print("*********************************************************");
+package_extract_file("dtbo/main/dtbo.img", "/dev/block/platform/13500000.dwmmc0/by-name/dtbo");
+set_progress(0.9);
+
+endif;
+
+if file_getprop("/tmp/aroma/customize.prop", "selected.4") == "2" then
+ui_print("*********************************************************");
+ui_print("-- NO ADDITIONAL FEATURES HAS BEEN CHOSEN");
+ui_print("*********************************************************");
+set_progress(0.9);
+
+endif;
+
+###################################### END OF CUSTOMIZATION MENU STUFFS ##########################################
+
+set_progress(1.0);
+ui_print("Installation completed. ");

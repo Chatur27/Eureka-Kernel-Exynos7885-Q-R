@@ -1,0 +1,329 @@
+﻿### LICENSE:
+#
+# Copyright (C) 2011 Ahmad Amarullah ( http://amarullz.com/ )
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+### FILE INFO:
+#
+# AROMA Installer 2.70 - AROMA Installer Test Script Configuration
+#       (c) 2011-2012 by Ahmad Amarullah
+#           amarullz - xda-developers
+#           http://www.amarullz.com/
+#
+#       Binary Version  : 3.00
+#       Binary Codename : Flamboyan
+#
+
+##
+# Initializing kernel Information
+#
+ini_set("force_colorspace", "rgba");
+ini_set("Kernel_name",      "Eureka Kernel");
+ini_set("Kernel_version",   "R4.5.4");
+ini_set("Author",           "Chatur");
+ini_set("Co-Author",        "Gabriel");
+ini_set("Device",           "Samsung Galaxy A10");
+ini_set("Date released",    "26 Oct 2020");
+
+
+#
+# Show Simple Splash for 3 seconds
+#
+splash(3000, "logo");
+
+#
+# Show Animated Splash
+#
+# anisplash(4, "splash/a1", 500, "splash/a2", 30, "splash/a3", 30, "splash/a4", 30, "splash/a5", 30, "splash/a6", 30);
+
+#
+# Set Small Font to Support all fonts
+#
+fontresload( "0", "ttf/Roboto-Regular.ttf;", "13" );
+fontresload( "1", "ttf/Roboto-Regular.ttf;", "16" );
+
+#
+# Set theme
+#
+theme("eureka");
+
+#
+# Show information about kernel
+#
+ini_set("text_next", "Next");
+ini_set("icon_next", "@next");
+viewbox(
+" WELCOME \t\t\t\t\t\t",
+" INFORMATION ABOUT THIS KERNEL:\n\n"+
+" NAME  \t\t\t: <b><#selectbg_g>Eureka Kernel</#></b>\n"+
+" VERSION \t\t: <b><#selectbg_g>R4.6</#></b>\n"+
+" BUILD DATE \t\t: <b><#selectbg_g>23/10/2020</#></b>\n"+
+" DEVELOPER \t\t: <b><#selectbg_g>Chatur</#></b>\n"+
+" CO-DEVELOPER \t: <b><#selectbg_g>Gabriel</#></b>\n"+
+" DEVICE \t\t\t: <b><#selectbg_g>Samsung Galaxy A10</#></b>\n\n\n"+
+"   PRESS NEXT TO START INSTALLATION",
+"@welcome"
+);
+
+#
+# MAIN MENU- INSTALLER
+#
+# Change the Next button text to "none"
+ini_set("text_next", " ");
+ini_set("icon_next", "@none");
+menubox(
+  #-- Title
+    "INSTALLER MENU \t\t\t\t\t",
+  
+  #-- Sub Title
+    "Eureka Kernel Aroma Installer",
+  
+  #-- Icon
+    "@welcome",
+  
+  #-- Will be saved in /tmp/aroma/menu.prop
+    "menu.prop",
+
+     #-------------------------+-----------------[ Menubox Items ]-------------------------+---------------#
+     # TITLE                   |  SUBTITLE                                                 |   Item Icons  #
+     #-------------------------+-----------------------------------------------------------+---------------#  
+  
+    "Full Installation",          "Installs kernel, spectrum, magisk 21.0",   "@install",      #-- selected.0 = 1
+    "Custom Installation",        "Choose what to install",                   "@customize",    #-- selected.0 = 2
+    "System Info",                "View your device's specs",                 "@info",         #-- selected.0 = 3
+    "ChangeLog",                  "Eureka ChangeLog",                         "@license",      #-- selected.0 = 4
+    "Quit Installer",             "Go back to recovery",                      "@exit",         #-- selected.0 = 5
+    "Reboot",                     "Reboots device",                           "@reboot"        #-- selected.0 = 6
+    
+);
+
+
+#
+# Full Installation
+#
+if (prop("menu.prop","selected")=="1") then
+	  # Change the Next button text to "Install Now"
+	  ini_set("text_next", "Install Now");
+	  ini_set("icon_next", "@installbutton");
+	  selectbox(
+	    "VARIANTS MENU \t\t\t\t\t\t",
+	    "Choose your variant according to your OS",
+	    "@kernel",
+	    "kernel.prop",
+	  
+	     #-------------------+-----------------------[ Checkbox Items ]------------------------+---------------#
+	     #       TITLE       |                           SUBTITLE                              | Initial value #
+	     #-------------------+-----------------------------------------------------------------+---------------#
+	     "Kernel Variants Available:",                "",                                             2,  #-- Group 1. key = "selected.1"
+	      "OneUI",            "Installs kernel for OneUI",                                            0,  #-- selected.1 = 1
+	      "GSI Permissive",   "Installs kernel for GSI & Custom roms with PERMISSIVE SElinux",        0,  #-- selected.1 = 2
+	      "GSI Enforcing",    "Installs kernel for GSI & Custom roms with ENFORCING SElinux" ,        0   #-- selected.1 = 3
+
+	);
+	
+	# Change the Install Now button text back to "Next"
+	#
+	ini_set("text_next", "Next");
+	ini_set("icon_next", "@next");
+endif;
+
+#
+# Custom installation
+#
+if (prop("menu.prop","selected")=="2") then
+       if (prop("kernel.prop","selected.1")=="1") then
+            textdialog("Warning", resread("warning_2.txt"), "OK");
+            back("1");
+       endif;
+       if (prop("kernel.prop","selected.1")=="2") then
+            textdialog("Warning", resread("warning_2.txt"), "OK");
+            back("1");
+       endif;
+       if (prop("kernel.prop","selected.1")=="3") then
+            textdialog("Warning", resread("warning_2.txt"), "OK");
+            back("1");
+       else
+	    ini_set("text_next", "Next");
+	    ini_set("icon_next", "@next");
+	    #-- IF Installation type = "Custom" Show Customize Selection
+	    selectbox(
+	      "CUSTOMIZE MENU \t\t\t\t\t",
+	      "Select one or more item(s) in the list below to install.",
+	      "@personalize",
+	      "customize.prop",
+
+	      #-----------------------------------[ Selectbox With Groups ]------------------------+---------------#
+	      # TITLE            |  SUBTITLE                                                       | Initial Value #
+	      #------------------+-----------------------------------------------------------------+---------------#
+	       "Kernel Variants Available:",                "",                                         2,  #-- Group 1. key = "selected.1"
+		 "OneUI",            "Installs kernel for OneUI",                                       0,  #-- selected.1 = 1
+		 "GSI Permissive",   "Installs kernel for GSI & Custom roms with PERMISSIVE SElinux",   0,  #-- selected.1 = 2
+		 "GSI Enforcing",    "Installs kernel for GSI & Custom roms with ENFORCING SElinux" ,   0,  #-- selected.1 = 3
+		 "None",             "Don't install Eureka kernel base",                                0,  #-- selected.1 = 4
+	       
+	       "Spectrum Support:",                "",                                          2,  #-- Group 2. key = "selected.2"
+		 "YES",     "Enables Spectrum with 4 predefined profiles",                      0,  #-- selected.2 = 1
+		 "NO",      "Spectrum won't be installed or will be removed from your system",  0,  #-- selected.2 = 2
+	       
+	       "Magisk Setup (choose 1 kernel variant first!):",           "",                  2,  #-- Group 3. key = "selected.3"
+		 "Magisk 21.0",   "Magisk root version 21.0 will be installed ",                0,  #-- selected.3 = 1
+		 "Magisk 20.4",   "Magisk root version 20.4 will be installed ",                0,  #-- selected.3 = 2
+		 "No Magisk",     "No magisk root will be installed",                           0,  #-- selected.3 = 3
+	       
+	       "Additional features:",                "",                                       2,  #-- Group 4. key = "selected.4"
+		 "Enable oc and uc",  "Will enable overclock and underclock of CPU & GPU",      0,  #-- selected.4 = 1
+		 "No additional features",   "Nothing more will be installed",                  0   #-- selected.4 = 2
+    	);
+     endif;
+endif;
+
+#
+# Kernel info
+#
+if (prop("menu.prop","selected")=="3") then
+  # Change the Next button text to "none"
+  ini_set("text_next", " ");
+  ini_set("icon_next", "@none");
+  #-- Show Please Wait
+  pleasewait("Get System Informations...");
+
+  #-- Fetch System Information
+  setvar(
+    #-- Variable Name
+      "sysinfo",
+    
+    #-- Variable Value
+      "<@center><b>Your Device's System Information</b></@>\n\n"+
+      
+      "Model\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.model")+"</#></b>\n"+
+      "Name\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.name")+"</#></b>\n"+
+      "Device Name\t\t: <b><#selectbg_g>"+sysprop("ro.product.device")+"</#></b>\n"+
+      "Board Name\t\t: <b><#selectbg_g>"+sysprop("ro.product.board")+"</#></b>\n"+
+      "Manufacturer\t\t: <b><#selectbg_g>"+sysprop("ro.product.manufacturer")+"</#></b>\n\n"+
+      
+      "CPU\t\t\t: <b><#selectbg_g>"+sysprop("ro.product.cpu.abi")+"</#></b>\n\n"+
+      
+      "System Size\t: <b><#selectbg_g>"+getdisksize("/system","m")+" MB</#></b>\n"+
+        "\tFree\t\t: <b><#selectbg_g>"+getdiskfree("/system","m")+" MB</#></b>\n\n"+
+      "Data Size\t\t: <b><#selectbg_g>"+getdisksize("/data","m")+" MB</#></b>\n"+
+        "\tFree\t\t: <b><#selectbg_g>"+getdiskfree("/data","m")+" MB</#></b>\n\n"+
+      "Vendor Size\t: <b><#selectbg_g>"+getdisksize("/vendor","m")+" MB</#></b>\n"+
+        "\tFree\t\t: <b><#selectbg_g>"+getdiskfree("/vendor","m")+" MB</#></b>\n\n"+
+      "Product Size\t: <b><#selectbg_g>"+getdisksize("/product","m")+" MB</#></b>\n"+
+        "\tFree\t\t: <b><#selectbg_g>"+getdiskfree("/product","m")+" MB</#></b>\n\n"+
+      "Cache Size\t: <b><#selectbg_g>"+getdisksize("/cache","m")+" MB</#></b>\n"+
+        "\tFree\t\t: <b><#selectbg_g>"+getdiskfree("/cache","m")+" MB</#></b>\n\n"+
+      "SD card Size\t: <b><#selectbg_g>"+getdisksize("/external_sd","m")+" MB</#></b>\n"+
+        "\tFree\t\t: <b><#selectbg_g>"+getdiskfree("/external_sd","m")+" MB</#></b>\n\n"+
+
+      ""
+  );
+  
+  #-- Show Textbox
+  textbox(
+    #-- Title
+      "DEVICE SPECS \t\t\t\t\t\t",
+    
+    #-- Subtitle
+      "Current system information may not be supported in all devices.",
+    
+    #-- Icon
+      "@info",
+    
+    #-- Text
+      getvar("sysinfo")
+  );
+endif;
+
+#
+# CHANGELOG
+#
+if (prop("menu.prop","selected")=="4") then
+ textdialog("Eureka Changelog", resread("changelog.txt"), "I agree");
+  #-- Back to Menu
+  back("1");
+endif;
+
+#
+# QUIT INSTALLER
+#
+if (prop("menu.prop","selected")=="5") then
+
+#-- Exit
+  if
+    confirm(
+    #-- Title
+      "Exit",
+    #-- Text
+      "Are you sure you want to exit Eureka Installer?",
+    #-- Icon (Optional)
+      "@alert"
+    )=="yes"
+  then
+    #-- Exit 
+    exit("");
+  else
+    #-- Back to Menu
+    back("1");
+  endif;
+endif;
+
+#
+# Reboot
+#
+if (prop("menu.prop","selected")=="6") then
+  if
+    confirm(
+      "Reboot",
+      "Are you sure you want to reboot?",
+      "@alert"
+    )=="yes"
+  then
+    reboot("now");
+  else
+    back("1");
+  endif;
+endif;
+
+#
+# Goes to installation process
+#
+  ini_set("text_next", "Exit");
+  ini_set("icon_next", "@exit");
+setvar("retstatus",
+install(
+"",
+"<b>"+ini_get("Kernel name")+"</b>INSTALLING...\n"+
+"PLEASE WAIT WHILE INSTALLATION FINISHES. <b>"+ini_get("Kernel_name")+
+"</b> THIS PROCESS WILL TAKE SOME TIME",	
+"@install",	
+"THE INSTALLATION HAS FINISHED. <b>"+ini_get("Kernel_name")+
+"</b> PRESS EXIT BUTTON "
+)
+);
+textdialog("Warning", resread("warning.txt"), "OK");
+if
+    confirm(
+      "Reboot",
+      "Do you want to reboot?",
+      "@alert"
+    )=="yes"
+  then
+    reboot("now");
+  else
+    exit("");
+endif;
+
+
+#---- FINISH
