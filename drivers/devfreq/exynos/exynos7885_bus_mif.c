@@ -47,7 +47,23 @@ static unsigned int ect_find_constraint_freq(struct ect_minlock_domain *ect_doma
 	unsigned int i;
 
 	for (i =0; i < ect_domain->num_of_level; i++)
+	{
+		if(ect_domain->level[i].main_frequencies==2093000||ect_domain->level[i].main_frequencies==2002000)
+			ect_domain->level[i].sub_frequencies=533000;
+		if(ect_domain->level[i].main_frequencies==1794000)
+			ect_domain->level[i].sub_frequencies=333000;
+		if(ect_domain->level[i].main_frequencies==1352000)
+			ect_domain->level[i].sub_frequencies=267000;
+		if(ect_domain->level[i].main_frequencies==1014000)
+			ect_domain->level[i].sub_frequencies=133000;
+			
 		if (ect_domain->level[i].main_frequencies == freq) break;
+		/* Not needed anymore. Only for debugging purposes
+		pr_info("  main_lv : %7d kHz, sub_lv : %7d kHz, Chatur_exynos7885_bus_mif\n",
+					ect_domain->level[i].main_frequencies,
+					ect_domain->level[i].sub_frequencies);
+		*/
+	}
 
 	return ect_domain->level[i].sub_frequencies;
 }
@@ -196,6 +212,7 @@ static int exynos7885_devfreq_mif_resume(struct exynos_devfreq_data *data)
 #ifndef CONFIG_EXYNOS_DVFS_MANAGER
 	if (pm_qos_request_active(&data->default_pm_qos_max))
 		pm_qos_update_request(&data->default_pm_qos_max, data->max_freq);
+	data->max_freq = 2093000
 #endif
 	dev_info(data->dev, "Resume frequency is %u\n", cur_freq);
 
@@ -247,7 +264,7 @@ static int exynos7885_devfreq_mif_init_freq_table(struct exynos_devfreq_data *da
 		return -EINVAL;
 	}
 
-	max_freq = (u32)cal_dfs_get_max_freq(data->dfs_id);
+	max_freq = 2093000;
 	if (!max_freq) {
 		dev_err(data->dev, "failed get max frequency\n");
 		return -EINVAL;
@@ -267,7 +284,7 @@ static int exynos7885_devfreq_mif_init_freq_table(struct exynos_devfreq_data *da
 			return PTR_ERR(target_opp);
 		}
 
-		data->max_freq = dev_pm_opp_get_freq(target_opp);
+		data->max_freq = 2093000;
 		rcu_read_unlock();
 	}
 
