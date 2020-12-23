@@ -145,6 +145,35 @@ CLEAN_SOURCE()
 	sleep 1	
 }
 
+CLANG_CLEAN()
+{
+	echo "*****************************************************"
+	echo " "
+	echo "              Cleaning kernel source"
+	echo " "
+	echo "*****************************************************"
+	
+	rm -rf out
+	if [ -e "kernel_zip/anykernel/Image" ]
+	then
+	  {
+	     rm -rf arch/$ARCH/boot/Image
+	     rm -rf arch/$ARCH/boot/dtbo.img
+	     rm -rf kernel_zip/anykernel/Image
+	     rm -rf kernel_zip/anykernel/dtbo.img
+	  }
+	fi
+	
+	if [ -e "kernel_zip/aroma/aroma_files/$AROMA_DIR/Image" ]
+	then
+	  {
+	     rm -rf kernel_zip/aroma/aroma_files/$AROMA_DIR/Image
+	     rm -rf kernel_zip/aroma/aroma_files/$AROMA_DIR/$AROMA_ZIP
+	     rm -rf kernel_zip/aroma/dtbo/dtbo.img
+	  }
+	fi
+}
+
 BUILD_KERNEL()
 {
 	echo "*****************************************************"
@@ -180,11 +209,11 @@ AUTO_TOOLCHAIN()
 	     export CROSS_COMPILE=$(pwd)/toolchain/bin/$GCC_ARM64_FILE
 	     export CROSS_COMPILE_ARM32=$(pwd)/toolchain/bin/$GCC_ARM32_FILE
 	  }
-	elif [ -e "clang/clang9.0.3" ]
+	elif [ -e "toolchain/pro_clang12" ]
 	then
 	  {
 	     echo " "
-	     echo "Using Clang 9.0.3 as main compiler"
+	     echo "Using Proton Clang 12 as main compiler"
 	     GCC_ARM64_FILE=aarch64-linux-gnu-
 	     GCC_ARM32_FILE=arm-linux-gnueabi-
 	     export CLANGC="OK"
@@ -212,33 +241,17 @@ AUTO_TOOLCHAIN()
 
 CLANG()
 {
-if [ -e "toolchain/gcc9" ]
-then
-{
+	export LOCALVERSION=-$VERSION
 	make O=out ARCH=arm64 ANDROID_MAJOR_VERSION=$ANDROID $DEFCONFIG
-	PATH="$KERNEL_DIR/clang/bin:$KERNEL_DIR/toolchain/bin:${PATH}" \
+	PATH="$KERNEL_DIR/toolchain/bin:$KERNEL_DIR/toolchain/bin:${PATH}" \
 	make -j$CORES O=out \
 	ARCH=arm64 \
 	ANDROID_MAJOR_VERSION=$ANDROID \
 	CC=clang \
-	LD_LIBRARY_PATH="$KERNEL_DIR/clang/lib64:$LD_LIBRARY_PATH" \
+	LD_LIBRARY_PATH="$KERNEL_DIR/toolchain/lib:$LD_LIBRARY_PATH" \
 	CLANG_TRIPLE=aarch64-linux-gnu- \
 	CROSS_COMPILE=$GCC_ARM64_FILE \
 	CROSS_COMPILE_ARM32=$GCC_ARM32_FILE
-}
-else
-{
-	echo -e "*****************************************************"
-	echo -e "                                                     "
-	echo -e "      WARNNG: CLANG REQUIRES ATLEAST GCC 9 TOOLCHAIN "
-	echo -e "      TO COMPILE SUCCESSFULLY! EXITING SCRIPT.."
-	echo -e "                                                     "
-	echo -e "*****************************************************"
-	sleep 2
-	exit
-}
-fi
-
 }
 
 ZIPPIFY()
@@ -548,7 +561,7 @@ COMMON_STEPS()
 	if [ ${CLANGC} == "OK" ]
 	then
 	{
-		rm -rf out
+		CLANG_CLEAN
 	}
 	else
 	{
@@ -627,9 +640,7 @@ AUTO_TOOLCHAIN
 if [ ${CLANGC} == "OK" ]
 then
 	{
-	echo " "
-	echo "Removing temporary files if available"
-	rm -rf out
+	CLANG_CLEAN
 	sleep 2
 	}
 else
