@@ -866,6 +866,10 @@ static __init int init_table(struct exynos_cpufreq_domain *domain)
 		list_for_each_entry(ufc, &domain->ufc_list, list)
 			ufc->info.freq_table[index].master_freq =
 					domain->freq_table[index].frequency;
+		/* Not needed anymore. Keep only for debugging purposes
+		pr_info("  freq : %u kHz, volt : %u uV, Chatur_UFC_VT\n",
+			table[index],volt_table[index]);
+		*/
 	}
 	domain->freq_table[index].driver_data = index;
 	domain->freq_table[index].frequency = CPUFREQ_TABLE_END;
@@ -974,6 +978,10 @@ static int init_constraint_table_ect(struct exynos_cpufreq_domain *domain,
 				break;
 			}
 		}
+		/* Not needed anymore. Keep only for debugging purposes
+		pr_info("  freq : %u kHz, constraint_freq : %u kHz, Chatur_CFT\n",
+			freq,dm->c.freq_table[index].constraint_freq);
+		*/
 
 		/*
 		 * Due to higher levels of constraint_freq should not be NULL,
@@ -1020,11 +1028,118 @@ static int init_constraint_table_dt(struct exynos_cpufreq_domain *domain,
 			if (freq <= table[c_index].master_freq)
 				dm->c.freq_table[index].constraint_freq
 					= table[c_index].constraint_freq;
+			
+			// This overwrites values specified in dtbo.
+			// MIF constraint frequency for little cores
+			if(freq==1794000||freq==1898000||freq==2002000)
+			{
+				dm->c.freq_table[index].constraint_freq=1014000;
+			}
+			if(freq==1690000)
+			{
+				dm->c.freq_table[index].constraint_freq=1014000;
+			}
+			if(freq==1586000)
+			{
+				dm->c.freq_table[index].constraint_freq=1014000;
+			}
+			if(freq==1482000)
+			{
+				dm->c.freq_table[index].constraint_freq=1014000;
+			}
+			if(freq==1352000)
+			{
+				dm->c.freq_table[index].constraint_freq=1014000;
+			}
+			if(freq==1248000)
+			{
+				dm->c.freq_table[index].constraint_freq=1014000;
+			}
+			
+			if(freq==1144000)
+			{
+				dm->c.freq_table[index].constraint_freq=845000;
+			}
+			if(freq==1014000)
+			{
+				dm->c.freq_table[index].constraint_freq=845000;
+			}
+			if(freq==902000)
+			{
+				dm->c.freq_table[index].constraint_freq=676000;
+			}
+			if(freq==839000)
+			{
+				dm->c.freq_table[index].constraint_freq=676000;
+			}
+			if(freq==757000)
+			{
+				dm->c.freq_table[index].constraint_freq=546000;
+			}
+			if(freq==676000)
+			{
+				dm->c.freq_table[index].constraint_freq=546000;
+			}
+			if(freq==546000)
+			{
+				dm->c.freq_table[index].constraint_freq=420000;
+			}
+			if(freq==449000)
+			{
+				dm->c.freq_table[index].constraint_freq=420000;
+			}
+			if(freq==343000||freq==208000)
+			{
+				dm->c.freq_table[index].constraint_freq=420000;
+			}
+			
+			// MIF constraint frequency for big cores
+			if(freq==2496000||freq==2392000||freq==2288000||freq==2184000||freq==2080000||freq==1976000||freq==1872000)
+			{
+				dm->c.freq_table[index].constraint_freq=1794000;
+			}
+			if(freq==1768000)
+			{
+				dm->c.freq_table[index].constraint_freq=1539000;
+			}
+			if(freq==1664000)
+			{
+				dm->c.freq_table[index].constraint_freq=1539000;
+			}
+			if(freq==1560000)
+			{
+				dm->c.freq_table[index].constraint_freq=1352000;
+			}
+			if(freq==1352000&&dm->c.freq_table[index].constraint_freq==1352000)
+			{
+				dm->c.freq_table[index].constraint_freq=1014000;
+			}
+			if(freq==1144000&&dm->c.freq_table[index].constraint_freq==1014000)
+			{
+				dm->c.freq_table[index].constraint_freq=845000;
+			}
+			if(freq==936000&&table[c_index].constraint_freq==1014000)
+			{
+				dm->c.freq_table[index].constraint_freq=676000;
+			}
+			if(freq==728000)
+			{
+				dm->c.freq_table[index].constraint_freq=546000;
+			}
+			if(freq==520000)
+			{
+				dm->c.freq_table[index].constraint_freq=546000;
+			}
+			if(freq==312000||freq==208000)
+			{
+				dm->c.freq_table[index].constraint_freq=420000;
+			}
 
 			if (freq >= table[c_index].master_freq)
 				break;
-
 		}
+		pr_info("  Freq : %u kHz, MIF constraint_freq : %u kHz, Chatur_MIF_CFT\n",
+			freq,dm->c.freq_table[index].constraint_freq);
 	}
 
 	kfree(table);
@@ -1092,25 +1207,46 @@ static __init int init_domain(struct exynos_cpufreq_domain *domain,
 
 	mutex_init(&domain->lock);
 
-	/* Initialize frequency scaling */
+	/* Not needed anymore because max frequencies are read from dtbo
+	// Initialize frequency scaling
 	domain->max_freq = cal_dfs_get_max_freq(domain->cal_id);
-	domain->min_freq = cal_dfs_get_min_freq(domain->cal_id);
+	domain->min_freq = cal_dfs_get_min_freq(domain->cal_id); 
+	if (domain->id == 0)
+	{
+		domain->max_freq = 1690000;
+	}
+	else if (domain->id == 1)
+	{
+		domain->max_freq = 2184000;
+	}
+	*/
 
 	/*
 	 * If max-freq property exists in device tree, max frequency is
 	 * selected to the value defined in device tree (ignoring ECT limit)
-	 * In case of min-freq, min frequency is selected
-	 * to bigger one.
+	 * If min-freq property exists in device tree, min frequency is
+	 * selected to the value defined in device tree
 	 */
 #ifndef CONFIG_EXYNOS_HOTPLUG_GOVERNOR
 	if (!of_property_read_u32(dn, "max-freq", &val))
 		domain->max_freq = val;
 #endif
 	if (!of_property_read_u32(dn, "min-freq", &val))
-		domain->min_freq = max(domain->min_freq, val);
+		domain->min_freq = val;
 
 	domain->boot_freq = cal_dfs_get_boot_freq(domain->cal_id);
 	domain->resume_freq = cal_dfs_get_resume_freq(domain->cal_id);
+	// Allow phone to boot with max frequency and increase this unknown "resume_freq" by 1 level
+	if (domain->id == 0)
+	{
+		domain->boot_freq = domain->max_freq;
+		domain->resume_freq = 1144000;
+	}
+	else if (domain->id == 1)
+	{
+		domain->boot_freq = domain->max_freq;
+		domain->resume_freq = 1560000;
+	}
 
 	/* Initialize freq boost */
 	if (domain->boost_supported) {
