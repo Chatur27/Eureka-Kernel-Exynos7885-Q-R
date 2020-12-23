@@ -563,23 +563,23 @@ static int ect_parse_ap_thermal_function(int parser_version, void *address, stru
 		if (range->max_frequency == 2184000) //for big cores
 			range->max_frequency = 2184000;
 		else if (range->max_frequency == 2080000) //for big cores
-			range->max_frequency = 2080000;
+			range->max_frequency = 2184000;
 		else if (range->max_frequency == 1976000) //for big cores
-			range->max_frequency = 2080000;
+			range->max_frequency = 2184000;
 		else if (range->max_frequency == 1872000) //for big cores
-			range->max_frequency = 2080000;
+			range->max_frequency = 2184000;
 		else if (range->max_frequency == 1794000) //for little cores
 			range->max_frequency = 1794000;
 		else if (range->max_frequency == 1768000) //for big cores
-			range->max_frequency = 2080000;
+			range->max_frequency = 2184000;
 		else if (range->max_frequency == 1690000) //for little cores
 			range->max_frequency = 1690000;
 		else if (range->max_frequency == 1664000) //for big cores
-			range->max_frequency = 2080000;
+			range->max_frequency = 2184000;
 		else if (range->max_frequency == 1586000) //for little cores
 			range->max_frequency = 1690000;
 		else if (range->max_frequency == 1560000) //for big cores
-			range->max_frequency = 2080000;
+			range->max_frequency = 2184000;
 		else if (range->max_frequency == 1482000) //for little cores
 			range->max_frequency = 1690000;
 		else if (range->max_frequency == 1352000) //for little cores but conflicts with big cores' frequency
@@ -587,7 +587,7 @@ static int ect_parse_ap_thermal_function(int parser_version, void *address, stru
 		else if (range->max_frequency == 1144000) //for little cores
 			range->max_frequency = 1690000;
 		else if (range->max_frequency == 728000) //for big cores
-			range->max_frequency = 2080000;
+			range->max_frequency = 2184000;
 		
 		ect_parse_integer(&address, &range->sw_trip);
 		ect_parse_integer(&address, &range->flag);
