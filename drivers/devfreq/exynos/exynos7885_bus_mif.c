@@ -212,7 +212,7 @@ static int exynos7885_devfreq_mif_resume(struct exynos_devfreq_data *data)
 #ifndef CONFIG_EXYNOS_DVFS_MANAGER
 	if (pm_qos_request_active(&data->default_pm_qos_max))
 		pm_qos_update_request(&data->default_pm_qos_max, data->max_freq);
-	data->max_freq = 2093000
+	data->max_freq = 2093000;
 #endif
 	dev_info(data->dev, "Resume frequency is %u\n", cur_freq);
 
