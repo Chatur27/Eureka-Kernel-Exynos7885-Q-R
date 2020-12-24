@@ -813,7 +813,7 @@
 			cpufreq {
 				cpufreq_domain0: domain@0 {
 					min-freq = <343000>;
-					max-freq = <1794000>;
+					max-freq = <1690000>;
 					policy-max = <1690000>;
 					
 					pm_qos-booting = <1690000>;
@@ -822,8 +822,7 @@
 					
 					dm-constraints {
 						mif-perf {
-							table = < 1794000 1794000
-								  1690000 1794000
+							table = < 1690000 1794000
 								  1586000 1794000
 						         	  1482000 1539000
 								  1352000 1539000
@@ -888,7 +887,7 @@
 						execution-mode = <AARCH64_MODE>;
 							/* big	    lit */
 						table = <
-							  312000  420000
+							  312000  343000
 							  >;
 						};
 
@@ -896,7 +895,7 @@
 						ctrl-type = <PM_QOS_MAX_LIMIT>;
 						execution-mode = <AARCH64_MODE>;
 							/* big	    lit */
-						table = < 2184000 1794000
+						table = < 2184000 1690000
 							  2080000 1690000
           						  1976000 1586000
           						  1872000 1482000
@@ -924,7 +923,7 @@
 						execution-mode = <AARCH64_MODE>;
 							/* big	    lit */
 						table = < 
-          				 		  312000  420000
+          				 		  312000  343000
           				 		  >;
 					};
 
@@ -932,7 +931,7 @@
 						ctrl-type = <PM_QOS_MAX_LIMIT>;
 						execution-mode = <AARCH64_MODE>;
 							/* big	    lit */
-						table = < 2184000 1794000
+						table = < 2184000 1690000
 							  2080000 1690000
           						  1976000 1586000
           						  1872000 1482000
