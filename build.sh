@@ -319,8 +319,14 @@ AROMA_ZIP()
 		         AROMA_DIR="gsi_perm"
 		         AROMA_ZIP="gsi_perm.zip"
 		     }
-		   fi
-		fi
+		  elif [ "${SELINUX_B}" == "fake_enforcing" ];
+		  then
+		     {
+		         AROMA_DIR="gsi_fake_enf"
+		         AROMA_ZIP="gsi_fake_enf.zip"
+		     }
+		  fi
+	fi
 		
 		echo " "
 		echo " Starting process for building Aroma zip for "$AROMA_DIR" "
@@ -412,6 +418,8 @@ SELINUX()
 	echo " "
 	echo "  3. Build GSI version of Eureka with ENFORCING SElinux";
 	echo " "
+	echo "  4. Build GSI version of Eureka with FAKE ENFORCING SElinux";
+	echo " "
 	echo "Leave empty to exit this script";
 	echo " "
 	echo " "
@@ -435,6 +443,12 @@ SELINUX()
 			export SELINUX_STATUS="$SELINUX_B"_
 			export TYPE="gsi"
 		   };;
+		4)
+		   {
+			export SELINUX_B=fake_enforcing
+			export SELINUX_STATUS="$SELINUX_B"_
+			export TYPE="gsi"
+		   };;
 		*)
 		   {
 			echo
@@ -453,6 +467,11 @@ SELINUX()
 		then
 		echo " "
 		echo "Using permissive selinux"
+			cp -rf $(pwd)/build_files/gsi/selinux security/
+		elif [ ${SELINUX_B} == "permissive" ]
+		then
+		echo " "
+		echo "Using permissive selinux with fake enforcing"
 			cp -rf $(pwd)/build_files/gsi/selinux security/
 		elif [ ${SELINUX_B} == "enforcing" ]
 		then
