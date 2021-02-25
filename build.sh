@@ -27,6 +27,7 @@ CORES=$(nproc --all)
 SELINUX_STATUS=""
 TYPE="oneui"
 REV=1.0
+PCUSER=chatur
 USER=Chatur
 ZIPNAME=Eureka_Rx.x_Axxx_xxxx_x_x.zip
 DEFAULT_NAME=Eureka_Rx.x_Axxx_P/Q/R
@@ -142,6 +143,8 @@ CLEAN_SOURCE()
 	     rm -rf kernel_zip/aroma/dtbo/dtbo.img
 	  }
 	fi
+	
+	ADDITIONAL_CLEANUP
 	sleep 1	
 }
 
@@ -171,6 +174,31 @@ CLANG_CLEAN()
 	     rm -rf kernel_zip/aroma/aroma_files/$AROMA_DIR/$AROMA_ZIP
 	     rm -rf kernel_zip/aroma/dtbo/dtbo.img
 	  }
+	fi
+	
+	ADDITIONAL_CLEANUP
+}
+
+ADDITIONAL_CLEANUP()
+{	
+	if [ -e "drivers/usb/gadget/.oneui_mtp" ]
+	then
+		rm -rf drivers/usb/gadget/.oneui_mtp
+	fi
+	
+	if [ -e "drivers/usb/gadget/.gsi_mtp" ]
+	then
+		rm -rf drivers/usb/gadget/.gsi_mtp
+	fi
+	
+	if [ -e "security/selinux/.permissive" ]
+	then
+		rm -rf security/selinux/.permissive
+	fi
+	
+	if [ -e "security/selinux/.enforcing" ]
+	then
+		rm -rf security/selinux/.enforcing
 	fi
 }
 
@@ -273,7 +301,7 @@ ZIPPIFY()
 		
 		# Go to anykernel directory
 		cd kernel_zip/anykernel
-		zip -r9 $ZIPNAME META-INF modules patch ramdisk tools anykernel.sh Image dtbo.img version
+		zip -r9 $ZIPNAME META-INF tools anykernel.sh Image dtbo.img version
 		chmod 0777 $ZIPNAME
 		# Change back into kernel source directory
 		cd ..
@@ -383,14 +411,15 @@ ENTER_VERSION()
 USER()
 {
 	# Setup KBUILD_BUILD_USER
-	echo "Current build username is $USER"
+	echo " Current build username is $USER"
 	echo " "
-	read -p "Please type build_user (E.g: Chatur) : " user;
+	read -p " Please type build_user (E.g: Chatur) : " user;
 	if [ "${user}" == "" ]; then
 		echo " "
 		echo "     Using '$USER' as Username"
 	else
 		export KBUILD_BUILD_USER=$user
+		USER=$user
 		echo " "
 		echo "     build_user = $user"
 	fi
@@ -513,6 +542,15 @@ ONEUI_STATE()
 	# Always return gadget and selinux folders to OneUI state else git will mark those folders as changed
 	cp -rf $(pwd)/build_files/oneui/gadget drivers/usb/
 	cp -rf $(pwd)/build_files/oneui/selinux security/
+	
+	# Since wireguard checks for update during compilation, its group will change from $user to root.
+	# So change it back to default user group. Do this only for me. Gabriel does not need that i guess.
+	if [ ${USER} == "Chatur" ]
+	then
+	{
+	chown -R $PCUSER $(pwd)/net/wireguard
+	}
+	fi
 }
 
 UPDATE_BUILD_FILES()
@@ -686,27 +724,28 @@ echo "*             $PROJECT_NAME Build Script             *"
 echo "*                  Developer: Chatur                 *"
 echo "*                Co-Developer: Gabriel               *"
 echo "*                                                    *"
-echo "*          Compiling kernel using Linaro-GCC         *"
+echo "*      Compiling kernel using Proton Clang 12        *"
 echo "*                                                    *"
-echo "* Some information about parameters set:             *"
-echo -e "*  > Architecture: $ARCH                             *"
-echo    "*  > Jobs: $CORES                                         *"
-echo    "*  > Revision for this build: R$REV                   *"
-echo    "*  > Version chosen: $TYPE                           *"
-echo    "*  > SElinux Status: $SELINUX_B                       *"
-echo    "*  > Kernel Name Template: $VERSION    *"
-echo    "*  > Build user: $KBUILD_BUILD_USER                              *"
-echo    "*  > Build machine: $KBUILD_BUILD_HOST                       *"
-echo    "*  > Build started on: $BUILD_START                    *"
-echo    "*  > ARM64 Toolchain exported                        *"
-echo    "*  > ARM32 Toolchain exported                        *"
-echo -e "******************************************************"
+echo "******************************************************"
+echo " Some informations about parameters set:		"
+echo -e "    > Architecture: $ARCH				"
+echo    "    > Jobs: $CORES					"
+echo    "    > Revision for this build: R$REV			"
+echo    "    > Version chosen: $TYPE				"
+echo    "    > SElinux Status: $SELINUX_B			"
+echo    "    > Kernel Name Template: $VERSION			"
+echo    "    > Build user: $KBUILD_BUILD_USER			"
+echo    "    > Build machine: $KBUILD_BUILD_HOST		"
+echo    "    > Build started on: $BUILD_START			"
+echo    "    > ARM64 Toolchain exported				"
+echo    "    > ARM32 Toolchain exported				"
+echo -e "*****************************************************"
 echo " "
 
-echo "Devices avalaible for compilation: "
+echo " Devices avalaible for compilation: "
 echo " "
 PS3='
-Please select your device: '
+ Please select your device: '
 menuoptions=("$SM_A105X" "$SM_A205X" "$SM_A305X" "$SM_A307X" "$SM_A405X" "$SM_A505X" "Exit")
 select menuoptions in "${menuoptions[@]}"
 do
