@@ -1,6 +1,6 @@
 # AnyKernel3 Ramdisk Mod Script
 # osm0sis @ xda-developers
-# Edit for A10 R6.0 by @chatur27 on XDA
+# Edit for A10 R6.2 by @chatur27 on XDA
 ## AnyKernel setup
 # begin properties
 properties() { '
@@ -52,23 +52,9 @@ mount /system/
 mount /system_root/
 mount -o rw,remount -t auto /system >/dev/null;
 
-## Enable Spectrum Support
-ui_print " ";
-ui_print "- Configuring Spectrum support";
-ui_print " ";
-cp /tmp/anykernel/tools/init.spectrum.rc /system_root/init.spectrum.rc;
-chmod 644 /system_root/init.spectrum.rc;
-cp /tmp/anykernel/tools/init.spectrum.sh /system_root/init.spectrum.sh;
-chmod 755 /system_root/init.spectrum.sh;
-
-insert_line /system_root/init.rc "import /init.spectrum.rc" after "import /prism/etc/init/init.rc" "import /init.spectrum.rc";
-
-cp /tmp/anykernel/tools/init.spectrum.rc /system/init.spectrum.rc;
-chmod 644 /system/init.spectrum.rc;
-cp /tmp/anykernel/tools/init.spectrum.sh /system/init.spectrum.sh;
-chmod 755 /system/init.spectrum.sh;
-
-insert_line /system/init.rc "import /init.spectrum.rc" after "import /prism/etc/init/init.rc" "import /init.spectrum.rc";
+## Copy additional files to internal storage
+cp /tmp/anykernel/tools/espectrum.zip /data/media/0/enable_spectrum_support.zip;
+chmod 755 /data/media/0/enable_spectrum_support.zip;
 
 ## Copy changelog to internal storage
 cp /tmp/anykernel/tools/changelog.txt /data/media/0/changelog.txt;
@@ -77,9 +63,15 @@ chmod 755 /data/media/0/changelog.txt;
 umount /system;
 umount /system_root;
 
+ui_print " ";
 ui_print "- Installation finished successfully";
 ui_print " ";
 
-ui_print "- Reboot your phone & thank you :)";
+ui_print "- Thank you for using Eureka Kernel :)";
+ui_print " ";
+
+ui_print "- Flash zip found on your internal storage to";
+ui_print "- enable/update latest spectrum support";
+ui_print " ";
 
 ## end install

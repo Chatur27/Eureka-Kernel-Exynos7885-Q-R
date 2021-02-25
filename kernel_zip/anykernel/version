@@ -1,7 +1,7 @@
 ***************************************************
 * Device    : S. Galaxy A10 (All variants, F/G/M) *
 * Source    : Based on A105F_SWA_QQ source code   *
-* Version   : Eureka R6.0                         *
+* Version   : Eureka R6.2.1                       *
 * Chipset   : Exynos 7884B with Mali G71 MP2      *
 * Android   : FOR ANDROID VERSION 10 (Q) & 11 (R) *
 * Developer : @Chatur27 on XDA                    *
@@ -10,13 +10,13 @@
 *         PERFORMANCE AND GAMING KERNEL           *
 ***************************************************
 * Antutu score for stock kernel: ~89887           *
-* Antutu score for Eureka kernel: ~145693         *
+* Antutu score for Eureka kernel: ~154693         *
 * 3DMark Sling Shot score for stock kernel: ~851  *
-* 3DMark Sling Shot score for Eureka kernel: ~1450*
+* 3DMark Sling Shot score for Eureka kernel: ~1487*
 ***************************************************
-*        THIS VERSION IS FOR ONEUI ONLY!!!        *
+*      THIS VERSION IS FOR ONEUI ROMS ONLY!!      *
 ***************************************************
-* Overclock Big cores from 1.56 Ghz to 2.08 Ghz   *
+* Overclock Big cores from 1.56 Ghz to 2.184 Ghz  *
 * Overclock Little cores from 1.35 Ghz to 1.69 Ghz*
 * Underclock Big cores from 936 MHz to 312 MHz    *
 * Underclock Little cores from 839 MHz to 343 MHz *
@@ -24,7 +24,7 @@
 * Removed Security Stuffs, debbuging codes, etc.. *
 * Balance between performance and battery life    *
 * Enabled and adapted spectrum support for Eureka *
-* Upstream kernel version from 4.4.177 to 4.4.248 *
-* Compiled kernel with clang 9.0.3 toolchain !    *
+* Upstream kernel version from 4.4.177 to 4.4.258 *
+* Compiled kernel with Proton-Clang 12 toolchain  *
 * Automatic detection of magisk root              *
 ***************************************************

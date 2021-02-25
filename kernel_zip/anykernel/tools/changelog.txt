@@ -1,4 +1,4 @@
-Kernel latest version: Eureka_R5.0_Axxx_P/Q/R
+Kernel latest version: Eureka_R6.1.2_Axxx_P/Q/R
 Author: Chatur
 Contact info:
  * Telegram: chatur2709
@@ -133,6 +133,74 @@ read ntfs filesystems because android os doesnt have necessary libraries to moun
 
 51) Update Spectrum profile parameters
 
-52) ...
+
+##################  MAIN FEATURES OF R6.1
+
+52) Further overclocked BIG cores from 2080 MHz to 2184 MHz.
+
+53) Undervolted the whole soc (exynos 7884B) including CPU and GPU.
+
+54) Tweaked kernel for stability and less battery drain at high frequencies.
+
+55) Enabled back 312 MHz and 343 MHz frequencies for big and little cores respectively.
+
+56) Fixed automatic scaling to overclocked frequencies. No need to force frequencies now!
+
+57) CPU throttling bypass increased till 2184 MHz for big cores.
+
+58) Updated spectrum profiles inorder to use max frequencies.
+
+59) Automatic detection of root when flashing kernel. If you are already rooted, you won't lose root when
+flashing kernel as from now. So, no need to flash magisk after kernel!!
+
+60) Added powersuspend driver v1.8 - saves battery when screen is off.
+
+61) Removed/disabled some more useless debugging codes and Samsung securities.
+
+62) Added an improved version of KSM known as UKSM (Ultra Kernel Samepage Merging) - Decreases ram usage
+(Only for A10)
+
+63) Removed Userspace lmkd and switched back to stock LMK.
+
+64) Added Maple I/O scheduler
+
+65) Disable GFS for better ui responsiveness for all kernels now.
+
+66) Ficed issue of bootloop!! - No more stucking on bootlogo.
+
+67) Slight improvement in boot's speed.
+
+68) Update wireguard vpn driver to latest version - v1.0.20201221.
+
+69) Updated kernel source to latest for A10 - A105FDDU3BTF1
+
+70) Upstreamed kernel version from 4.4.241 to 4.4.248 which is the latest stable version.
+
+71) Built kernel with latest Proton Clang 12 and LTO for better performance.
+
+72) Optional spectrum support - Flash enable_spectrum_support.zip on your internal storage to enable spectrum.
+
+
+##################  MAIN FEATURES OF R6.1.2 (minor update release)
+
+73) Fixed bluetooth on arm64 roms for A10 only
+
+74) Upstreamed kernel version from 4.4.248 to 4.4.252 which is the latest stable version.
+
+
+################## WAITING FOR NEXT KERNEL UPDATE?
+
+This is probably the last version (R6.1) update I'm releasing. I believe this kernel is already at its
+best now. As from now, I will only release R6.1 for other phones who have not got Eureka kernel at all.
+No new update will be released by me. Android Pie is already dead. Soon Android Q will be dead. Maybe,
+I will continue Eureka project when Android R rolls out to our device officially (only if I'm free !!!).
+
+Thank you for using Eureka and I hope you will keep using my kernel although i will probably not update
+it anymore :)
+
+
+
+
+
 
 
