@@ -238,11 +238,11 @@ AUTO_TOOLCHAIN()
 	     export CROSS_COMPILE=$(pwd)/toolchain/bin/$GCC_ARM64_FILE
 	     export CROSS_COMPILE_ARM32=$(pwd)/toolchain/bin/$GCC_ARM32_FILE
 	  }
-	elif [ -e "toolchain/pro_clang12" ]
+	elif [ -e "toolchain/pro_clang13" ]
 	then
 	  {
 	     echo " "
-	     echo "Using Proton Clang 12 as main compiler"
+	     echo "Using Proton Clang 13 as main compiler"
 	     GCC_ARM64_FILE=aarch64-linux-gnu-
 	     GCC_ARM32_FILE=arm-linux-gnueabi-
 	     export CLANGC="OK"
