@@ -1257,6 +1257,8 @@ static irqreturn_t s2mu205_ivr_isr(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
+bool unstable_power_detection = true;
+
 static int s2mu205_charger_parse_dt(struct device *dev,
 		struct s2mu205_charger_platform_data *pdata)
 {
