@@ -1,4 +1,4 @@
-obj-$(CONFIG_BATTERY_SAMSUNG)	+= sec_battery.o
+obj-$(CONFIG_BATTERY_SAMSUNG)	+= sec_battery.o sec_control.o
 obj-$(CONFIG_OF)		+= sec_adc.o
 obj-$(CONFIG_MULTI_CHARGING)	+= sec_multi_charger.o
 obj-$(CONFIG_STEP_CHARGING)	+= sec_step_charging.o
@@ -13,7 +13,7 @@ obj-$(CONFIG_FUELGAUGE_S2MU004)		+= s2mu004_fuelgauge.o
 obj-$(CONFIG_FUELGAUGE_S2MU005)		+= s2mu005_fuelgauge.o
 obj-$(CONFIG_FUELGAUGE_MAX77865)	+= max77865_fuelgauge.o
 
-obj-$(CONFIG_CHARGER_S2MU205)   += s2mu205_charger.o sec_control.o
+obj-$(CONFIG_CHARGER_S2MU205)   += s2mu205_charger.o
 obj-$(CONFIG_CHARGER_S2MU106)   += s2mu106_charger.o
 obj-$(CONFIG_CHARGER_S2MU004)   += s2mu004_charger.o
 obj-$(CONFIG_CHARGER_S2MU005)   += s2mu005_charger.o
