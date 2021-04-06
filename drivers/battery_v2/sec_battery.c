@@ -252,6 +252,8 @@ static char *supply_list[] = {
 	"battery",
 };
 
+void charger_control_init(struct sec_battery_info *info);
+
 char *sec_cable_type[SEC_BATTERY_CABLE_MAX] = {
 	"UNKNOWN",		/* 0 */
 	"NONE",			/* 1 */
@@ -10629,6 +10631,9 @@ static int sec_battery_probe(struct platform_device *pdev)
 
 	dev_info(battery->dev,
 		"%s: SEC Battery Driver Loaded\n", __func__);
+	
+	charger_control_init(battery);
+
 	return 0;
 
 err_req_irq:
