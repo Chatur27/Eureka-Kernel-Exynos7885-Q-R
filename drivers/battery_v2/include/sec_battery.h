@@ -83,15 +83,15 @@
 #define SIOP_EVENT_WPC_CALL 	0x0001
 
 #if defined(CONFIG_SEC_FACTORY)			/* SEC_FACTORY */
-//#if defined(CONFIG_A10_FACTORY_MAX_SOC)
-//#define STORE_MODE_CHARGING_MAX 75
-//#else
+#if defined(CONFIG_A10_FACTORY_MAX_SOC)
+#define STORE_MODE_CHARGING_MAX 75
+#else
 #define STORE_MODE_CHARGING_MAX 80
-//#endif
+#endif
 #define STORE_MODE_CHARGING_MIN 70
 #else						/* !SEC_FACTORY, STORE MODE */
-//#define STORE_MODE_CHARGING_MAX 70
-//#define STORE_MODE_CHARGING_MIN 60
+#define STORE_MODE_CHARGING_MAX 70
+#define STORE_MODE_CHARGING_MIN 60
 #define STORE_MODE_CHARGING_MAX_VZW 35
 #define STORE_MODE_CHARGING_MIN_VZW 30
 #endif //(CONFIG_SEC_FACTORY)
@@ -679,8 +679,6 @@ enum {
 extern unsigned int lpcharge;
 
 extern void select_pdo(int num);
-
-void charger_control_init(struct sec_battery_info *info);
 
 extern int adc_read(struct sec_battery_info *battery, int channel);
 extern void adc_init(struct platform_device *pdev, struct sec_battery_info *battery);

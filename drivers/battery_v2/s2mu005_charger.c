@@ -1636,8 +1636,6 @@ static void s2mu005_ovp_work(struct work_struct *work)
 }
 #endif
 
-bool unstable_power_detection = true;
-
 static int s2mu005_charger_parse_dt(struct device *dev,
 		struct s2mu005_charger_platform_data *pdata)
 {
