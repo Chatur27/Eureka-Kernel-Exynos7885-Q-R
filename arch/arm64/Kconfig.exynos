@@ -5,7 +5,7 @@ config MACH_EXYNOS7885_A10_OPEN
 	help
 	Say Y here if you want to enable building dtbo for Galaxy A10.
 	
-onfig MACH_EXYNOS7885_A20E_OPEN
+config MACH_EXYNOS7885_A20E_OPEN
 	bool "Build Dtbo image for SM-A202"
 	depends on SOC_EXYNOS7885
 	default n
