@@ -725,7 +725,7 @@ echo "*             $PROJECT_NAME Build Script             *"
 echo "*                  Developer: Chatur                 *"
 echo "*                Co-Developer: Gabriel               *"
 echo "*                                                    *"
-echo "*      Compiling kernel using Proton Clang 12        *"
+echo "*      Compiling kernel using Proton Clang 13        *"
 echo "*                                                    *"
 echo "******************************************************"
 echo " Some informations about parameters set:		"
@@ -747,7 +747,7 @@ echo " Devices avalaible for compilation: "
 echo " "
 PS3='
  Please select your device: '
-menuoptions=("$SM_A105X" "$SM_A205X" "$SM_A305X" "$SM_A307X" "$SM_A405X" "$SM_A505X" "Exit")
+menuoptions=("$SM_A105X" "$SM_A205X" "$SM_A202X" "$SM_A305X" "$SM_A307X" "$SM_A405X" "$SM_A505X" "Exit")
 select menuoptions in "${menuoptions[@]}"
 do
     case $menuoptions in
@@ -770,6 +770,17 @@ do
 		echo " "
 		DEVICE_Axxx=$DEVICE_A205
 		DEFCONFIG=exynos7885-a20_"$TYPE"_"$SELINUX_STATUS"defconfig
+		COMMON_STEPS
+		break
+		;;
+	"$SM_A202X")
+		echo " "
+        	echo "Android versions available: "
+        	echo " "
+		OS_MENU
+		echo " "
+		DEVICE_Axxx=$DEVICE_A202
+		DEFCONFIG=exynos7885-a20e_"$TYPE"_"$SELINUX_STATUS"defconfig
 		COMMON_STEPS
 		break
 		;;
