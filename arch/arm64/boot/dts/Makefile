@@ -10,6 +10,22 @@ dtb-$(CONFIG_MACH_EXYNOS7885_A10_OPEN) := \
 	exynos/dtbo/exynos7884B-a10_sea_open_00.dtbo \
 	exynos/dtbo/exynos7884B-a10_swa_open_00.dtbo
 
+dtb-$(CONFIG_MACH_EXYNOS7885_A20_GLOBAL) := \
+	exynos/dtbo/exynos7884B-a20_cis_ser_00.dtbo \
+	exynos/dtbo/exynos7884B-a20_cis_ser_01.dtbo \
+	exynos/dtbo/exynos7884B-a20_cis_ser_03.dtbo \
+	exynos/dtbo/exynos7884B-a20_aus_xsa_00.dtbo \
+	exynos/dtbo/exynos7884B-a20_aus_xsa_01.dtbo \
+	exynos/dtbo/exynos7884B-a20_aus_xsa_03.dtbo \
+	exynos/dtbo/exynos7884B-a20_can_single_03.dtbo \
+	exynos/dtbo/exynos7884B-a20_can_single_05.dtbo \
+	exynos/dtbo/exynos7884B-a20_sea_xtc_00.dtbo \
+	exynos/dtbo/exynos7884B-a20_sea_xtc_01.dtbo \
+	exynos/dtbo/exynos7884B-a20_sea_xtc_03.dtbo \
+	exynos/dtbo/exynos7884B-a20_swa_open_00.dtbo \
+	exynos/dtbo/exynos7884B-a20_swa_open_01.dtbo \
+	exynos/dtbo/exynos7884B-a20_swa_open_03.dtbo
+
 dtb-$(CONFIG_MACH_EXYNOS7885_A20e_OPEN) := \
 	exynos/dtbo/exynos7884B-a20e_eur_open_00.dtbo \
 	exynos/dtbo/exynos7884B-a20e_eur_open_03.dtbo
