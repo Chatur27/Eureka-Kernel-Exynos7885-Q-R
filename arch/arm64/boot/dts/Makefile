@@ -30,5 +30,13 @@ dtb-$(CONFIG_MACH_EXYNOS7885_A20e_OPEN) := \
 	exynos/dtbo/exynos7884B-a20e_eur_open_00.dtbo \
 	exynos/dtbo/exynos7884B-a20e_eur_open_03.dtbo
 
+dtb-$(CONFIG_MACH_EXYNOS7885_A30_OPEN) := \
+	exynos/dtbo/exynos7904-a30_cis_open_00.dtbo \
+	exynos/dtbo/exynos7904-a30_cis_open_01.dtbo \
+	exynos/dtbo/exynos7904-a30_cis_open_02.dtbo \
+	exynos/dtbo/exynos7904-a30_swa_open_00.dtbo \
+	exynos/dtbo/exynos7904-a30_swa_open_01.dtbo \
+	exynos/dtbo/exynos7904-a30_swa_open_02.dtbo
+
 always         := $(dtb-y) $(dtbo-y)
 clean-files    := *.dtb *.dtbo
