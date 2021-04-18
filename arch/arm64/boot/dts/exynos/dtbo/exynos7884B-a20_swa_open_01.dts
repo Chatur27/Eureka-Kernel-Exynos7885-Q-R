@@ -19,7 +19,7 @@
 #include "exynos7884B-a20-sensor-r00.dtsi"
 
 / {
-	compatible = "samsung,A20 SWA OPEN 01", "samsung,EXYNOS7884B - Built by Eureka Team. Need to add because of kangers";
+	compatible = "samsung,A20 SWA OPEN 01", "samsung,EXYNOS7884B";
 
 	dtbo-hw_rev = <1>;
     dtbo-hw_rev_end = <2>;
@@ -31,7 +31,7 @@
 			#address-cells = <2>;
 			#size-cells = <1>;
 
-			model = "Samsung A20 SWA OPEN 01 board based on EXYNOS7884B";
+			model = "Samsung A20 SWA OPEN 01 board based on EXYNOS7884B - Built by Eureka Team. Need to add because of kangers";
 
 		}; /* end of __overlay__ */
 	}; /* end of fragment */

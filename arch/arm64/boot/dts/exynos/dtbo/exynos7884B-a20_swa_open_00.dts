@@ -19,7 +19,7 @@
 #include "exynos7884B-a20-sensor-r00.dtsi"
 
 / {
-	compatible = "samsung,A20 SWA OPEN 00", "samsung,EXYNOS7884B - Built by Eureka Team. Need to add because of kangers";
+	compatible = "samsung,A20 SWA OPEN 00", "samsung,EXYNOS7884B";
 
 	dtbo-hw_rev = <0>;
     dtbo-hw_rev_end = <0>;
@@ -31,7 +31,7 @@
 			#address-cells = <2>;
 			#size-cells = <1>;
 
-			model = "Samsung A20 SWA OPEN 00 board based on EXYNOS7884B";
+			model = "Samsung A20 SWA OPEN 00 board based on EXYNOS7884B - Built by Eureka Team. Need to add because of kangers";
 
 			sound {
 				samsung,routing =  "VOUTPUT", "ABOX UAIF0 Playback",

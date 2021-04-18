@@ -18,7 +18,7 @@
 #include "exynos7904-a30_fingerprint_00.dtsi"
 
 / {
-	compatible = "samsung,A30 CIS OPEN 02", "samsung,EXYNOS7904 - Built by Eureka Team. Need to add because of kangers";
+	compatible = "samsung,A30 CIS OPEN 02", "samsung,EXYNOS7904";
 
 	dtbo-hw_rev = <2>;
 	dtbo-hw_rev_end = <255>;
@@ -30,7 +30,7 @@
 			#address-cells = <2>;
 			#size-cells = <1>;
 
-			model = "Samsung A30 CIS OPEN 01 board based on EXYNOS7904";
+			model = "Samsung A30 CIS OPEN 01 board based on EXYNOS7904 - Built by Eureka Team. Need to add because of kangers";
 
 			speedy@11CE0000 {
 				audio_codec_cod3035x: cod3035x@03 {

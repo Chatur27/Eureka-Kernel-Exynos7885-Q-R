@@ -19,7 +19,7 @@
 #include "exynos7884B-a20-sensor-r00.dtsi"
 
 / {
-	compatible = "samsung,A20 SWA OPEN 03", "samsung,EXYNOS7884B - Built by Eureka Team. Need to add because of kangers";
+	compatible = "samsung,A20 SWA OPEN 03", "samsung,EXYNOS7884B";
 
 	dtbo-hw_rev = <3>;
     dtbo-hw_rev_end = <255>;
@@ -31,7 +31,7 @@
 			#address-cells = <2>;
 			#size-cells = <1>;
 
-			model = "Samsung A20 SWA OPEN 03 board based on EXYNOS7884B";
+			model = "Samsung A20 SWA OPEN 03 board based on EXYNOS7884B - Built by Eureka Team. Need to add because of kangers";
 
 			speedy@11CE0000 {
 				audio_codec_cod3035x: cod3035x@03 {
