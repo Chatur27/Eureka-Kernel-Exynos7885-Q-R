@@ -27,7 +27,7 @@ PROJECT_NAME="Eureka Kernel"
 CORES=$(nproc --all)
 SELINUX_STATUS=""
 TYPE="oneui"
-REV=1.0
+REV=6.5
 PCUSER=chatur
 USER=Chatur
 ZIPNAME=Eureka_Rx.x_Axxx_xxxx_x_x.zip
@@ -86,8 +86,7 @@ DEVICE_A505=A505
 ######################## Android OS list #######################
 
 androidp="Android 9 (Pie)"
-androidq="Android 10 (Q)"
-androidr="Android 11 (R)"
+androidr="Android 10 (Q) 11 (R)"
 
 ################################################################
 
@@ -136,15 +135,6 @@ CLEAN_SOURCE()
 	  }
 	fi
 	
-	if [ -e "kernel_zip/aroma/aroma_files/$AROMA_DIR/Image" ]
-	then
-	  {
-	     rm -rf kernel_zip/aroma/aroma_files/$AROMA_DIR/Image
-	     rm -rf kernel_zip/aroma/aroma_files/$AROMA_DIR/$AROMA_ZIP
-	     rm -rf kernel_zip/aroma/dtbo/dtbo.img
-	  }
-	fi
-	
 	ADDITIONAL_CLEANUP
 	sleep 1	
 }
@@ -165,15 +155,6 @@ CLANG_CLEAN()
 	     rm -rf arch/$ARCH/boot/dtbo.img
 	     rm -rf kernel_zip/anykernel/Image
 	     rm -rf kernel_zip/anykernel/dtbo.img
-	  }
-	fi
-	
-	if [ -e "kernel_zip/aroma/aroma_files/$AROMA_DIR/Image" ]
-	then
-	  {
-	     rm -rf kernel_zip/aroma/aroma_files/$AROMA_DIR/Image
-	     rm -rf kernel_zip/aroma/aroma_files/$AROMA_DIR/$AROMA_ZIP
-	     rm -rf kernel_zip/aroma/dtbo/dtbo.img
 	  }
 	fi
 	
@@ -206,7 +187,7 @@ ADDITIONAL_CLEANUP()
 BUILD_KERNEL()
 {
 	echo "*****************************************************"
-	echo "           Building kernel for $DEVICE_Axxx          "
+	echo "      Building kernel for $DEVICE_Axxx android $ANDROID"
 	export ANDROID_MAJOR_VERSION=$ANDROID
 	export LOCALVERSION=-$VERSION
 	make  $DEFCONFIG
@@ -243,22 +224,12 @@ AUTO_TOOLCHAIN()
 	  {
 	     echo " "
 	     echo "Using Proton Clang 13 as main compiler"
+	     echo " "
 	     GCC_ARM64_FILE=aarch64-linux-gnu-
 	     GCC_ARM32_FILE=arm-linux-gnueabi-
 	     export CLANGC="OK"
 	     echo " "
 	  }
-	#elif [ -e "toolchain/gcc9" ]
-	#then
-	#  {
-	#     echo " "
-	#     echo "Using Gcc v9.1 toolchain"
-	#     echo " "
-	#     GCC_ARM64_FILE=aarch64-linux-gnu-
-	#     GCC_ARM32_FILE=arm-linux-gnueabi-
-	#     export CROSS_COMPILE=$(pwd)/toolchain/bin/$GCC_ARM64_FILE
-	#     export CROSS_COMPILE_ARM32=$(pwd)/toolchain/bin/$GCC_ARM32_FILE
-	#  }
 	else
 	  echo " "
 	  echo "WARNING: Toolchain directory couldn't be found"
@@ -313,70 +284,6 @@ ZIPPIFY()
 	fi
 }
 
-AROMA_ZIP()
-{
-	# Make Eureka Aroma zip
-	
-	if [ -e "arch/$ARCH/boot/Image" ]
-	then
-	{
-		echo -e "*****************************************************"
-		echo -e "                                                     "
-		echo -e "         Building Eureka Aroma flashable zip         "
-		echo -e "                                                     "
-		echo -e "*****************************************************"
-		
-		# Copy Image and dtbo.img to aroma directory
-		cp -f arch/$ARCH/boot/dtbo.img kernel_zip/aroma/dtbo/dtbo.img
-		if [ "${TYPE}" == "oneui" ];
-		then                     
-		  {
-		      AROMA_DIR="oneui"
-		      AROMA_ZIP="oneui.zip"
-		  }
-		elif [ "${TYPE}" == "gsi" ];
-		then
-		  if [ "${SELINUX_B}" == "enforcing" ];
-		  then
-		     {
-		         AROMA_DIR="gsi_enf"
-		         AROMA_ZIP="gsi_enf.zip"
-		     }
-		  elif [ "${SELINUX_B}" == "permissive" ];
-		  then
-		     {
-		         AROMA_DIR="gsi_perm"
-		         AROMA_ZIP="gsi_perm.zip"
-		     }
-		  elif [ "${SELINUX_B}" == "fake_enforcing" ];
-		  then
-		     {
-		         AROMA_DIR="gsi_fake_enf"
-		         AROMA_ZIP="gsi_fake_enf.zip"
-		     }
-		  fi
-	fi
-		
-		echo " "
-		echo " Starting process for building Aroma zip for "$AROMA_DIR" "
-		echo " "
-		cp -f arch/$ARCH/boot/Image kernel_zip/aroma/aroma_files/$AROMA_DIR/Image
-		cd kernel_zip/aroma/aroma_files/$AROMA_DIR
-		zip -r9 $AROMA_ZIP META-INF modules patch ramdisk tools anykernel.sh Image version
-		cd ..
-		sleep 1
-		cd ..
-		cp -f aroma_files/$AROMA_DIR/$AROMA_ZIP kernel/$AROMA_ZIP
-		chmod 0777 kernel/$AROMA_ZIP
-		
-		zip -r9 Aroma_R"$REV"_"$DEVICE_Axxx".zip dtbo kernel magisk META-INF spectrum
-		chmod 0777 Aroma_R"$REV"_"$DEVICE_Axxx".zip
-		cd ..
-		sleep 1
-		cd ..
-	}
-	fi
-}
 PROCESSES()
 {
 	# Allow user to choose how many cores to be taken by compiler
@@ -440,7 +347,7 @@ SELINUX()
 	echo -e "***************************************************************";
 	echo "             Select which version you wish to build               ";
 	echo -e "***************************************************************";
-	echo "Available versions:";
+	echo " Available versions:";
 	echo " "
 	echo "  1. Build OneUI version of Eureka with ENFORCING SElinux";
 	echo " "
@@ -448,9 +355,7 @@ SELINUX()
 	echo " "
 	echo "  3. Build GSI version of Eureka with ENFORCING SElinux";
 	echo " "
-	echo "  4. Build GSI version of Eureka with FAKE ENFORCING SElinux";
-	echo " "
-	echo "Leave empty to exit this script";
+	echo "  4. Leave empty to exit this script";
 	echo " "
 	echo " "
 	read -n 1 -p "Select your choice: " -s choice;
@@ -473,12 +378,6 @@ SELINUX()
 			export SELINUX_STATUS="$SELINUX_B"_
 			export TYPE="gsi"
 		   };;
-		4)
-		   {
-			export SELINUX_B=fake_enforcing
-			export SELINUX_STATUS="$SELINUX_B"_
-			export TYPE="gsi"
-		   };;
 		*)
 		   {
 			echo
@@ -496,17 +395,12 @@ SELINUX()
 		if [ ${SELINUX_B} == "permissive" ]
 		then
 		echo " "
-		echo "Using permissive selinux"
-			cp -rf $(pwd)/build_files/gsi/selinux security/
-		elif [ ${SELINUX_B} == "permissive" ]
-		then
-		echo " "
-		echo "Using permissive selinux with fake enforcing"
+		echo " Using permissive selinux"
 			cp -rf $(pwd)/build_files/gsi/selinux security/
 		elif [ ${SELINUX_B} == "enforcing" ]
 		then
 		echo " "
-		echo "Using enforcing selinux"
+		echo " Using enforcing selinux"
 			cp -rf $(pwd)/build_files/oneui/selinux security/
 		fi
 	sleep 2
@@ -543,6 +437,9 @@ ONEUI_STATE()
 	# Always return gadget and selinux folders to OneUI state else git will mark those folders as changed
 	cp -rf $(pwd)/build_files/oneui/gadget drivers/usb/
 	cp -rf $(pwd)/build_files/oneui/selinux security/
+	
+	rm -rf drivers/usb/gadget/.oneui_mtp
+	rm -rf security/selinux/.enforcing
 	
 	# Since wireguard checks for update during compilation, its group will change from $user to root.
 	# So change it back to default user group. Do this only for me. Gabriel does not need that i guess.
@@ -614,8 +511,6 @@ COMMON_STEPS()
 	fi
 	ZIPPIFY
 	sleep 1
-	AROMA_ZIP
-	sleep 1
 	if [ ${CLANGC} == "OK" ]
 	then
 	{
@@ -643,7 +538,7 @@ OS_MENU()
 	# Give the choice to choose Android Version
 	PS3='
 Please select your Android Version: '
-	menuos=("$androidp" "$androidq" "$androidr" "Exit")
+	menuos=("$androidp" "$androidr" "Exit")
 	select menuos in "${menuos[@]}"
 	do
 	    case $menuos in
@@ -656,18 +551,9 @@ Please select your Android Version: '
 			echo " "
 			break
 			;;
-		"$androidq")
-			echo " "
-			echo "Android 10 (Q) chosen as Android Major Version"
-			ANDROID=q
-			AND_VER=10
-			sleep 2
-			echo " "
-			break
-			;;
 		"$androidr")
 			echo " "
-			echo "Android 11 (R) chosen as Android Major Version"
+			echo "Android 10 (Q) / 11 (R) chosen as Android Major Version"
 			ANDROID=r
 			AND_VER=11
 			sleep 2
@@ -725,7 +611,12 @@ echo "*             $PROJECT_NAME Build Script             *"
 echo "*                  Developer: Chatur                 *"
 echo "*                Co-Developer: Gabriel               *"
 echo "*                                                    *"
+if [ ${CLANGC} == "OK" ]
+then
 echo "*      Compiling kernel using Proton Clang 13        *"
+else
+echo "*        Compiling kernel using gay toochain         *"
+fi
 echo "*                                                    *"
 echo "******************************************************"
 echo " Some informations about parameters set:		"
