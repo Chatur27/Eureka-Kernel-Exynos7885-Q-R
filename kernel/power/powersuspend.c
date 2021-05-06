@@ -26,19 +26,6 @@
  *
  *  v1.8 - add debug sysfs trigger to see how driver work
  *
- *  v1.9.0 - Syncronized suspend/resume driver printing of ignored errors, and turned on state notifier debugger..
- *         - subsys_incall changed to module_init,
- *         - state notifier - going back to scheduled work, and subsys initcall,
- *         - initializing work in module init.
- *         - updated our outdated method of workqueue declaration.
- *
- *  v1.9.1 - Updated the depecrated method of declaring work but simply declaring
- *           the two work structs.  Also actually INITialized the work on init, and
- *           flushed it on exit.
- *
- *  v2.0.0 - Included State Notifier hooks to run explicitly once power state changes
- *	     are completed to prevent blocking issues.
- *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
  * may be copied, distributed, and modified under those terms.
@@ -54,12 +41,9 @@
 #include <linux/module.h>
 #include <linux/mutex.h>
 #include <linux/workqueue.h>
-#ifdef CONFIG_STATE_NOTIFIER
-#include <linux/state_notifier.h>
-#endif
 
-#define MAJOR_VERSION	2
-#define MINOR_VERSION	0
+#define MAJOR_VERSION	1
+#define MINOR_VERSION	8
 
 /*
  * debug = 1 will print all
@@ -77,12 +61,11 @@ struct workqueue_struct *suspend_work_queue;
 
 static DEFINE_MUTEX(power_suspend_lock);
 static LIST_HEAD(power_suspend_handlers);
+static void power_suspend(struct work_struct *work);
+static void power_resume(struct work_struct *work);
+static DECLARE_WORK(power_suspend_work, power_suspend);
+static DECLARE_WORK(power_resume_work, power_resume);
 static DEFINE_SPINLOCK(state_lock);
-struct work_struct power_suspend_work;
-struct work_struct power_resume_work;
-
-void power_suspend(struct work_struct *work);
-void power_resume(struct work_struct *work);
 
 static int state; // Yank555.lu : Current powersave state (screen on / off)
 static int mode;  // Yank555.lu : Current powersave mode  (kernel / userspace / panel / hybrid)
@@ -131,10 +114,7 @@ static void power_suspend(struct work_struct *work)
 			pos->suspend(pos);
 		}
 	}
-	pr_info("[POWERSUSPEND] suspend completed.\n");
-	#ifdef CONFIG_STATE_NOTIFIER
-		state_suspend();
-	#endif
+	dprintk("[POWERSUSPEND] suspend completed.\n");
 abort_suspend:
 	mutex_unlock(&power_suspend_lock);
 }
@@ -161,10 +141,7 @@ static void power_resume(struct work_struct *work)
 			pos->resume(pos);
 		}
 	}
-	pr_info("[POWERSUSPEND] resume completed.\n");
-	#ifdef CONFIG_STATE_NOTIFIER
-		state_resume();
-	#endif
+	dprintk("[POWERSUSPEND] resume completed.\n");
 abort_resume:
 	mutex_unlock(&power_suspend_lock);
 }
@@ -190,7 +167,7 @@ void set_power_suspend_state(int new_state)
 		}
 		spin_unlock_irqrestore(&state_lock, irqflags);
 	} else {
-		pr_info("[POWERSUSPEND] state change requested, but unchanged ?! Ignored !\n");
+		dprintk("[POWERSUSPEND] state change requested, but unchanged ?! Ignored !\n");
 	}
 }
 
@@ -301,7 +278,7 @@ static struct attribute_group power_suspend_attr_group =
 static struct kobject *power_suspend_kobj;
 
 // ------------------ sysfs interface -----------------------
-static int power_suspend_init(void)
+static int __init power_suspend_init(void)
 {
 	int sysfs_result;
 
@@ -327,22 +304,16 @@ static int power_suspend_init(void)
 //	mode = POWER_SUSPEND_PANEL;	// Yank555.lu : Default to display panel mode
 	mode = POWER_SUSPEND_HYBRID;	// Yank555.lu : Default to display panel / autosleep hybrid mode
 
-	INIT_WORK(&power_suspend_work, power_suspend);
-	INIT_WORK(&power_resume_work, power_resume);
-
 	return 0;
 }
 
-static void power_suspend_exit(void)
+static void __exit power_suspend_exit(void)
 {
-	flush_work(&power_suspend_work);
-	flush_work(&power_resume_work);
-
 	if (power_suspend_kobj != NULL)
 		kobject_put(power_suspend_kobj);
 }
 
-subsys_initcall(power_suspend_init);
+core_initcall(power_suspend_init);
 module_exit(power_suspend_exit);
 
 MODULE_AUTHOR("Paul Reioux <reioux@gmail.com> / Jean-Pierre Rasquin <yank555.lu@gmail.com>");
